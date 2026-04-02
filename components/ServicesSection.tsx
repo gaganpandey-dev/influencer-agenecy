@@ -1,150 +1,185 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 const services = [
   {
     id: "01",
     title: "Influencer Discovery",
-    desc: "Access a large dataset of macro, micro, nano and regional influencers across India with filters on audience, views and engagement.",
-    note: "Find the right creators for your exact target audience.",
+    desc: "Access 50K+ verified creators across YouTube, Instagram, and regional platforms with smart filtering by audience, niche, and engagement.",
+    note: "100% verified profiles with reliable contact details for faster outreach.",
   },
   {
     id: "02",
-    title: "Campaign Strategy & Planning",
-    desc: "We design data-driven influencer strategies tailored to your brand goals, audience and platform mix.",
-    note: "Includes content angles, creator mix and campaign roadmap.",
+    title: "Campaign Strategy",
+    desc: "Plan creator mix, audience targeting, content angles, and rollout timelines with a data-led campaign strategy built for your goals.",
+    note: "Delivered as a clear campaign roadmap your team can execute fast.",
   },
   {
     id: "03",
-    title: "End-to-End Campaign Execution",
-    desc: "From outreach and negotiation to content approvals and go-live — we handle everything.",
-    note: "One team managing your entire campaign.",
+    title: "Full Execution",
+    desc: "From outreach and negotiation to approvals and live launch, we manage the complete workflow with one dedicated team.",
+    note: "Single point of contact across the entire campaign lifecycle.",
   },
   {
     id: "04",
-    title: "Multi-Lingual Campaigns",
-    desc: "Reach diverse audiences across India using regional language creators and localized campaigns.",
-    note: "Perfect for pan-India and Bharat-focused brands.",
+    title: "Regional Campaigns",
+    desc: "Run localized campaigns across Hindi, Tamil, Telugu, Bengali, and other regional markets using native creator networks.",
+    note: "Local language creators help build stronger trust and authentic reach.",
   },
   {
     id: "05",
-    title: "24×7 Campaign Support",
-    desc: "Dedicated support via WhatsApp, calls and email to ensure smooth campaign execution.",
-    note: "We stay with you throughout the campaign lifecycle.",
+    title: "24×7 Support",
+    desc: "Get quick support on WhatsApp, call, and email with live coordination during campaign execution and reporting.",
+    note: "Available across India time zones for faster issue resolution.",
   },
   {
     id: "06",
-    title: "Performance Tracking & Scaling",
-    desc: "Track views, engagement, installs and revenue with actionable insights.",
-    note: "We optimize and scale what works best.",
+    title: "Performance Scaling",
+    desc: "Track views, clicks, installs, engagement, and ROAS in real time and scale the creator combinations that perform best.",
+    note: "Double down on winning creators and proven content patterns.",
   },
 ];
 
 export default function ServicesSection() {
-  const [active, setActive] = useState<number | null>(null);
+  const [active, setActive] = useState<number | null>(0);
 
   return (
-    <section className="relative py-24 px-6 md:px-12 bg-white overflow-hidden">
-
-      {/* 🌈 aurora bg */}
-      <div className="absolute inset-0 -z-10">
-        <div className="aurora-bg w-full h-full opacity-20" />
+    <section
+      id="services"
+      className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-cyan-50/30 py-20 md:py-28"
+    >
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-0 top-16 h-64 w-64 rounded-full bg-cyan-100/40 blur-3xl" />
+        <div className="absolute right-0 top-1/3 h-72 w-72 rounded-full bg-teal-100/30 blur-3xl" />
       </div>
 
-      <div className="max-w-6xl mx-auto">
-
-        {/* 🔝 HEADER */}
-        <div className="text-center max-w-3xl mx-auto">
-          <p className="text-xs tracking-[0.25em] uppercase text-cyan-600 font-semibold">
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+        {/* Header */}
+        <div className="mx-auto mb-16 max-w-4xl text-center md:mb-20">
+          <span className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-white/90 px-4 py-2 text-xs font-bold uppercase tracking-[0.24em] text-cyan-800 shadow-sm">
+            <Sparkles className="h-3.5 w-3.5" />
             Our Services
-          </p>
+          </span>
 
-          <h2 className="mt-3 text-3xl md:text-5xl font-bold leading-tight text-slate-900">
-            End-to-End{" "}
-            <span className="bg-gradient-to-r from-cyan-500 to-indigo-500 text-transparent bg-clip-text">
-              Influencer Marketing Solutions
-            </span>
+          <h2 className="mt-6 text-4xl font-black tracking-[-0.04em] text-slate-950 md:text-5xl lg:text-6xl">
+            End-to-end influencer marketing
           </h2>
 
-          <p className="mt-4 text-slate-600 text-lg">
-            From strategy to execution, Vmerg helps brands launch, manage and scale
-            influencer campaigns across YouTube, Instagram and regional creators.
+          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-slate-600 md:text-xl">
+            Launch, manage, and scale creator campaigns across YouTube,
+            Instagram, and regional platforms with strategy, execution, and
+            performance tracking in one flow.
           </p>
         </div>
 
-        {/* 🧩 GRID */}
-        <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Services Grid */}
+        <ul className="grid list-none grid-cols-1 gap-6 p-0 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+          {services.map((service, index) => {
+            const isActive = active === index;
 
-          {services.map((service, index) => (
-            <div
-              key={service.id}
-              onClick={() =>
-                setActive(active === index ? null : index)
-              }
-              className="group relative p-6 rounded-2xl border border-slate-200 bg-white cursor-pointer overflow-hidden transition duration-300 hover:shadow-xl hover:border-cyan-400"
-            >
+            return (
+              <li key={service.id} className="h-full">
+                <button
+                  type="button"
+                  onClick={() => setActive(isActive ? null : index)}
+                  className={`group relative flex h-full w-full flex-col overflow-hidden rounded-[2rem] border bg-white p-7 text-left transition-all duration-500 md:p-8 ${
+                    isActive
+                      ? "border-cyan-200 shadow-[0_20px_60px_rgba(6,182,212,0.14)]"
+                      : "border-slate-200 shadow-[0_10px_40px_rgba(15,23,42,0.05)] hover:-translate-y-2 hover:border-cyan-200 hover:shadow-[0_24px_70px_rgba(15,23,42,0.10)]"
+                  }`}
+                >
+                  <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-500" />
 
-              {/* ✨ glow layer */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-cyan-200/30 via-indigo-200/30 to-purple-200/30 blur-xl" />
+                  <div className="mb-6 flex items-center justify-between">
+                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-950 text-sm font-black text-white">
+                      {service.id}
+                    </span>
 
-              {/* 🧠 CONTENT */}
-              <div className="relative z-10">
-
-                <p className="text-xs uppercase tracking-[0.2em] text-cyan-600 font-semibold">
-                  {service.id}
-                </p>
-
-                <h3 className="mt-3 text-lg font-semibold text-slate-900 group-hover:text-cyan-600 transition">
-                  {service.title}
-                </h3>
-
-                <p className="text-sm text-slate-600 mt-2 leading-relaxed">
-                  {service.desc}
-                </p>
-
-                {/* 🔽 EXPAND ANIMATION */}
-                <AnimatePresence>
-                  {active === index && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 20, height: 0 }}
-                      animate={{ opacity: 1, y: 0, height: "auto" }}
-                      exit={{ opacity: 0, y: 10, height: 0 }}
-                      transition={{ duration: 0.35 }}
-                      className="overflow-hidden"
+                    <span
+                      className={`rounded-full border px-3 py-1 text-xs font-semibold transition-all duration-300 ${
+                        isActive
+                          ? "border-cyan-200 bg-cyan-50 text-cyan-700"
+                          : "border-slate-200 bg-slate-50 text-slate-500 group-hover:border-cyan-200 group-hover:bg-cyan-50 group-hover:text-cyan-700"
+                      }`}
                     >
-                      <p className="mt-4 text-xs text-slate-500 border-t pt-4">
-                        {service.note}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                      Explore
+                    </span>
+                  </div>
 
-              </div>
+                  <div className="flex flex-1 flex-col">
+                    <h3 className="text-2xl font-black leading-tight text-slate-950 transition-colors duration-300 group-hover:text-cyan-700">
+                      {service.title}
+                    </h3>
 
-              {/* 🎮 ICON DOT (GAME EFFECT) */}
-              <div className="absolute top-4 right-4 w-3 h-3 rounded-full bg-cyan-400 group-hover:bg-indigo-500 group-hover:scale-125 transition duration-300" />
+                    <p className="mt-4 text-base leading-7 text-slate-600">
+                      {service.desc}
+                    </p>
 
+                    <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-slate-400 transition-all duration-300 group-hover:text-cyan-700">
+                      <span>Learn more</span>
+                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </div>
+
+                    <div
+                      className={`grid transition-all duration-500 ${
+                        isActive
+                          ? "mt-6 grid-rows-[1fr] opacity-100"
+                          : "grid-rows-[0fr] opacity-0"
+                      }`}
+                    >
+                      <div className="overflow-hidden">
+                        <div className="border-t border-slate-100 pt-5">
+                          <p className="text-sm leading-6 text-slate-500">
+                            {service.note}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pointer-events-none absolute right-4 top-4 h-20 w-20 rounded-full bg-cyan-100/0 blur-2xl transition-all duration-500 group-hover:bg-cyan-100/70" />
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+
+        {/* CTA */}
+        <div className="mt-16 text-center md:mt-20">
+          <div className="mx-auto max-w-2xl rounded-[2rem] border border-slate-200 bg-white/90 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.06)] backdrop-blur-xl md:p-8">
+            <h3 className="text-2xl font-black text-slate-950">
+              Need a campaign plan for your brand?
+            </h3>
+
+            <p className="mx-auto mt-3 max-w-xl text-slate-600 leading-7">
+              Share your category, budget, and goals. Get a focused campaign
+              direction with creator recommendations and rollout ideas.
+            </p>
+
+            <div className="mt-6 flex flex-col justify-center gap-4 sm:flex-row">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center rounded-2xl bg-slate-950 px-7 py-4 text-base font-bold text-white transition-all duration-300 hover:-translate-y-1 hover:bg-black"
+              >
+                Start Your Campaign
+              </Link>
+
+              <Link
+                href="/brands"
+                className="inline-flex items-center justify-center rounded-2xl border border-slate-300 bg-white px-7 py-4 text-base font-bold text-slate-800 transition-all duration-300 hover:border-cyan-300 hover:bg-cyan-50 hover:text-cyan-700"
+              >
+                Explore For Brands
+              </Link>
             </div>
-          ))}
 
+            <p className="mt-5 text-sm text-slate-500">
+              Response within 24 hours for qualified campaign briefs.
+            </p>
+          </div>
         </div>
-
-        {/* 💰 CTA */}
-        <div className="mt-20 text-center">
-          <a
-            href="#lead-form"
-            className="inline-block bg-gradient-to-r from-cyan-500 to-indigo-500 text-white px-8 py-3 rounded-full text-sm font-medium shadow hover:scale-105 transition"
-          >
-            Start Your Campaign 🚀
-          </a>
-
-          <p className="mt-3 text-sm text-slate-500">
-            Share your goals, budget and timeline — our team will connect within 24 hours.
-          </p>
-        </div>
-
       </div>
     </section>
   );

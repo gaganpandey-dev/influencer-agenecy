@@ -1,108 +1,127 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
+import { ArrowUpRight, BadgeCheck } from "lucide-react";
+
+const fadeUp = {
+  initial: { opacity: 0, y: 25 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6 },
+};
 
 export default function HeroSection() {
   return (
-    <section className="relative bg-white text-slate-900 py-28 px-6 overflow-hidden">
-      
-      {/* 🌈 Soft Gradient Background */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-32 -left-20 h-80 w-80 bg-cyan-200/40 blur-3xl rounded-full" />
-        <div className="absolute bottom-[-6rem] right-[-3rem] h-96 w-96 bg-indigo-200/40 blur-3xl rounded-full" />
-      </div>
+    <section className="relative overflow-hidden bg-white py-24 sm:py-28 md:py-32">
 
-      <div className="relative max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-        
+      {/* BACKGROUND GLOW */}
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(6,182,212,0.08),transparent_30%)]" />
+
+      <div className="mx-auto grid max-w-7xl items-center gap-16 px-4 sm:px-6 lg:grid-cols-2">
+
         {/* 🔥 LEFT SIDE */}
         <div>
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-xs tracking-[0.3em] uppercase text-cyan-600 font-medium"
-          >
-            Creator-first • Performance-driven
-          </motion.p>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-4 text-4xl md:text-6xl font-bold leading-tight"
-          >
-            Build brands that{" "}
-            <span className="bg-gradient-to-r from-cyan-500 via-indigo-500 to-purple-500 text-transparent bg-clip-text">
-              people trust
-            </span>{" "}
-            with creators.
+          <motion.div {...fadeUp} className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-cyan-50 px-4 py-2 text-sm font-semibold text-cyan-800">
+            <BadgeCheck size={16} />
+            Trusted by growth-focused brands
+          </motion.div>
+
+          <motion.h1 {...fadeUp} transition={{ delay: 0.05 }}
+            className="mt-6 text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight text-slate-950">
+            Turn creator partnerships into measurable brand growth
           </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-6 text-slate-600 text-base max-w-lg leading-relaxed"
-          >
-            We help modern brands scale with high-performing influencer
-            campaigns — from strategy to execution across YouTube, Instagram,
-            UGC & creator ecosystems.
+          <motion.p {...fadeUp} transition={{ delay: 0.1 }}
+            className="mt-6 text-lg text-slate-700 max-w-xl">
+            <span className="font-semibold text-slate-900">VERGE</span> helps brands scale campaigns with better creator fit and stronger results.
           </motion.p>
 
-          {/* CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-8 flex flex-wrap gap-4"
-          >
-            <button className="px-6 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-500 text-white font-medium shadow-md hover:scale-105 hover:shadow-[0_10px_30px_rgba(34,211,238,0.4)] transition-all">
-              Start Your Campaign 🚀
-            </button>
+          <motion.div {...fadeUp} transition={{ delay: 0.15 }}
+            className="mt-8 flex gap-4">
+            <a href="/brands" className="bg-slate-950 text-white px-6 py-3 rounded-full font-semibold flex items-center gap-2 hover:bg-slate-800">
+              Start Campaign <ArrowUpRight size={16} />
+            </a>
 
-            <button className="px-6 py-3 rounded-full border border-slate-300 text-slate-700 hover:border-cyan-500 hover:text-cyan-600 transition-all">
-              View Case Studies →
-            </button>
+            <a href="/work" className="border px-6 py-3 rounded-full hover:bg-slate-50">
+              View Work
+            </a>
           </motion.div>
+
+          {/* STATS */}
+          <motion.div {...fadeUp} transition={{ delay: 0.2 }}
+            className="mt-10 grid grid-cols-3 gap-4 border-t pt-6">
+            <div>
+              <p className="text-xl font-bold">50+</p>
+              <p className="text-sm text-slate-600">Brands</p>
+            </div>
+            <div>
+              <p className="text-xl font-bold">10+</p>
+              <p className="text-sm text-slate-600">Categories</p>
+            </div>
+            <div>
+              <p className="text-xl font-bold">2x</p>
+              <p className="text-sm text-slate-600">Growth</p>
+            </div>
+          </motion.div>
+
         </div>
 
-        {/* 🚀 RIGHT SIDE */}
-        <div className="relative h-[360px] md:h-[400px]">
+        {/* 🔥 RIGHT SIDE CLEAN STACK */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative flex justify-center"
+        >
 
-          {/* Card 1 */}
-          <motion.div
-            animate={{ y: [0, -10, 0] }}
-            transition={{ repeat: Infinity, duration: 4 }}
-            className="absolute top-0 left-6 bg-white border border-slate-200 rounded-2xl px-5 py-4 shadow-lg"
-          >
-            <p className="text-xs text-slate-500">Campaign Reach</p>
-            <p className="text-2xl font-semibold text-slate-900">10M+</p>
-            <p className="text-xs text-cyan-600 mt-1">Last 90 days</p>
-          </motion.div>
+          {/* CONTAINER */}
+          <div className="relative w-[420px] h-[320px]">
 
-          {/* Card 2 */}
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ repeat: Infinity, duration: 5 }}
-            className="absolute top-24 right-0 bg-white border border-slate-200 rounded-2xl px-5 py-4 shadow-lg"
-          >
-            <p className="text-xs text-slate-500">Creator Network</p>
-            <p className="text-2xl font-semibold text-slate-900">5K+</p>
-            <p className="text-xs text-slate-500 mt-1">Verified creators</p>
-          </motion.div>
+            {/* BACK LEFT */}
+            <motion.div
+              whileHover={{ scale: 1.05, rotate: -4 }}
+              className="absolute top-6 left-0 w-[260px] rounded-2xl overflow-hidden shadow-xl border bg-white"
+            >
+              <Image src="/creator-1.jpeg" alt="" width={300} height={200} className="h-[180px] object-cover" />
+            </motion.div>
 
-          {/* Card 3 */}
+            {/* BACK RIGHT */}
+            <motion.div
+              whileHover={{ scale: 1.05, rotate: 4 }}
+              className="absolute top-0 right-0 w-[260px] rounded-2xl overflow-hidden shadow-xl border bg-white"
+            >
+              <Image src="/creator-2.jpeg" alt="" width={300} height={200} className="h-[180px] object-cover" />
+            </motion.div>
+
+            {/* FRONT CENTER */}
+            <motion.div
+              whileHover={{ scale: 1.08 }}
+              className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[300px] rounded-3xl overflow-hidden shadow-2xl border bg-white z-10"
+            >
+              <Image src="/creator-3.jpeg" alt="" width={400} height={250} className="h-[220px] object-cover" />
+            </motion.div>
+
+          </div>
+
+          {/* FLOATING TAGS */}
           <motion.div
             animate={{ y: [0, -8, 0] }}
-            transition={{ repeat: Infinity, duration: 6 }}
-            className="absolute bottom-4 left-16 bg-white border border-slate-200 rounded-2xl px-5 py-4 shadow-lg"
+            transition={{ repeat: Infinity, duration: 4 }}
+            className="absolute top-[-10px] right-5 bg-white px-4 py-2 rounded-xl shadow border text-sm font-semibold"
           >
-            <p className="text-xs text-slate-500">Brands</p>
-            <p className="text-2xl font-semibold text-slate-900">120+</p>
-            <p className="text-xs text-indigo-600 mt-1">
-              D2C • Fintech • SaaS
-            </p>
+            🚀 High Growth
           </motion.div>
 
-          {/* subtle glow */}
-          <div className="absolute -bottom-6 right-10 h-40 w-40 bg-cyan-300/40 blur-3xl rounded-full" />
-        </div>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ repeat: Infinity, duration: 5 }}
+            className="absolute bottom-[-10px] left-5 bg-white px-4 py-2 rounded-xl shadow border text-sm font-semibold"
+          >
+            🎯 Creator Match
+          </motion.div>
+
+        </motion.div>
+
       </div>
     </section>
   );

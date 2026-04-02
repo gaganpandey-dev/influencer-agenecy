@@ -1,244 +1,143 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
-import Link from "next/link";
-import Navbar from "../../components/Navbar";
-import { useTheme } from "../context/ThemeContext";
 
-type CaseStudy = {
-  id: string;
-  brand: string;
-  title: string;
-  result: string;
-  platform: string;
-  industry: string;
-};
-
-const CASE_STUDIES: CaseStudy[] = [
+const projects = [
   {
-    id: "fintech-yt",
-    brand: "Fintech App",
-    title: "Driving high-intent app installs via YouTube creators",
-    result: "3.2x ROAS · 1.1M+ views",
-    platform: "YouTube",
-    industry: "Finance",
+    title: "Fintech App Growth",
+    category: "YouTube",
+    image: "/creator-1.jpeg",
   },
   {
-    id: "d2c-ig",
-    brand: "Skincare Brand",
-    title: "Scaling D2C growth using Instagram reels",
-    result: "+18% new customers",
-    platform: "Instagram",
-    industry: "Beauty",
+    title: "D2C Brand Scaling",
+    category: "Instagram",
+    image: "/creator-2.jpeg",
   },
   {
-    id: "saas-ugc",
-    brand: "SaaS Tool",
-    title: "UGC ads reducing CAC for B2B product",
-    result: "27% lower CAC",
-    platform: "UGC",
-    industry: "SaaS",
+    title: "SaaS Product Launch",
+    category: "UGC",
+    image: "/creator-3.jpeg",
   },
   {
-    id: "meme-campaign",
-    brand: "Gaming Platform",
-    title: "Meme-led viral launch campaign",
-    result: "4.5M impressions in 7 days",
-    platform: "Meme",
-    industry: "Gaming",
+    title: "Gaming Campaign",
+    category: "Meme",
+    image: "/hero.jpeg",
   },
 ];
 
-const fadeUp = {
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.2 },
-  transition: { duration: 0.6, ease: "easeOut" },
-};
-
 export default function WorkPage() {
-  const { themeClasses } = useTheme();
-
   return (
-    <>
-      <Navbar />
+    <section className="relative py-24 bg-white overflow-hidden">
 
-      <main className={`relative min-h-screen overflow-hidden ${themeClasses.pageBg}`}>
-        <div className="absolute inset-0 -z-10">
-          <div
-            className={`absolute inset-0 bg-gradient-to-br ${themeClasses.sectionGlow}`}
-          />
-          <div className="absolute top-0 right-0 h-72 w-72 rounded-full bg-white/5 blur-3xl animate-pulse" />
-          <div className="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-white/5 blur-3xl animate-pulse" />
-        </div>
+      {/* 🔥 BACKGROUND GLOW */}
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,rgba(6,182,212,0.08),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(139,92,246,0.08),transparent_30%)]" />
 
-        {/* HERO */}
-        <section className="pt-32 pb-14 px-6 md:px-12">
-          <div className="max-w-6xl mx-auto">
-            <div className="max-w-3xl">
-              <motion.div
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-medium backdrop-blur-xl ${themeClasses.badge}`}
-              >
-                Case Studies
-              </motion.div>
+      <div className="max-w-7xl mx-auto px-6">
 
-              <motion.h1
-                initial={{ opacity: 0, y: 22 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className={`mt-6 text-4xl md:text-6xl font-black leading-[1.05] tracking-tight ${themeClasses.heroText}`}
-              >
-                Campaigns that{" "}
-                <span className={themeClasses.gradientText}>
-                  drive real growth
-                </span>
-              </motion.h1>
+        {/* 🔥 HERO SECTION */}
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-              <motion.p
-                initial={{ opacity: 0, y: 22 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className={`mt-5 text-base md:text-lg leading-8 max-w-2xl ${themeClasses.mutedText}`}
-              >
-                See how Vmerg helps brands across fintech, D2C, SaaS and gaming
-                scale using influencer marketing and creator-led campaigns with
-                measurable business outcomes.
-              </motion.p>
-            </div>
+          {/* LEFT */}
+          <div>
+            <p className="inline-block bg-cyan-100 text-cyan-700 px-4 py-2 rounded-full text-sm font-semibold">
+              CASE STUDIES
+            </p>
 
-            {/* FILTERS */}
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.25 }}
-              className="mt-8 flex flex-wrap gap-3 text-sm"
-            >
+            <h1 className="mt-6 text-5xl font-black text-slate-900 leading-tight">
+              Campaigns that drive real growth
+            </h1>
+
+            <p className="mt-6 text-lg text-slate-600 max-w-xl">
+              See how we help brands scale through influencer marketing and performance-driven campaigns.
+            </p>
+
+            {/* FILTER */}
+            <div className="mt-8 flex gap-3 flex-wrap">
               {["All", "YouTube", "Instagram", "UGC", "Meme"].map((item, i) => (
-                <span
+                <button
                   key={i}
-                  className={`px-4 py-2 rounded-full border transition cursor-pointer ${
+                  className={`px-5 py-2 rounded-full border ${
                     i === 0
-                      ? `${themeClasses.badge}`
-                      : "border-white/10 bg-white/5 text-white/75 hover:border-white/20 hover:text-white"
+                      ? "bg-cyan-600 text-white"
+                      : "bg-white text-slate-700 hover:bg-slate-50"
                   }`}
                 >
                   {item}
-                </span>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* CASE STUDIES */}
-        <section className="pb-16 px-6 md:px-12">
-          <div className="max-w-6xl mx-auto grid gap-8 md:grid-cols-2">
-            {CASE_STUDIES.map((cs, index) => (
-              <motion.article
-                key={cs.id}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.55, delay: index * 0.08 }}
-                className={`group p-7 md:p-8 rounded-3xl shadow-xl flex flex-col justify-between ${themeClasses.card}`}
-              >
-                <div>
-                  <div className="flex items-center justify-between gap-4 text-xs">
-                    <span className={`uppercase tracking-[0.18em] font-semibold ${themeClasses.gradientText}`}>
-                      {cs.platform}
-                    </span>
-                    <span className={themeClasses.mutedText}>{cs.industry}</span>
-                  </div>
-
-                  <h3 className={`mt-4 text-xl md:text-2xl font-bold tracking-tight ${themeClasses.heading}`}>
-                    {cs.brand}
-                  </h3>
-
-                  <p className={`mt-3 text-sm md:text-base leading-7 ${themeClasses.mutedText}`}>
-                    {cs.title}
-                  </p>
-
-                  <div className="mt-6">
-                    <span className={`inline-flex rounded-full px-3 py-1 text-sm font-semibold ${themeClasses.badge}`}>
-                      {cs.result}
-                    </span>
-                  </div>
-                </div>
-
-                <button className={`mt-8 w-fit text-sm font-medium transition ${themeClasses.gradientText}`}>
-                  View full case study →
                 </button>
-              </motion.article>
-            ))}
+              ))}
+            </div>
           </div>
 
-          {/* PROCESS STRIP */}
+          {/* RIGHT IMAGE */}
           <motion.div
-            {...fadeUp}
-            className={`mt-20 rounded-[2rem] px-6 py-10 md:px-10 md:py-12 shadow-2xl ${themeClasses.card}`}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.03 }}
+            className="relative"
           >
-            <p className={`text-xs uppercase tracking-[0.22em] font-semibold ${themeClasses.gradientText}`}>
-              How we work
-            </p>
-
-            <div className="mt-8 grid gap-6 md:grid-cols-3 text-sm">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                <h4 className={`font-semibold ${themeClasses.heading}`}>
-                  01 · Strategy
-                </h4>
-                <p className={`mt-2 leading-7 ${themeClasses.mutedText}`}>
-                  Understanding your goals, audience and designing the right
-                  creator mix for stronger campaign-market fit.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                <h4 className={`font-semibold ${themeClasses.heading}`}>
-                  02 · Execution
-                </h4>
-                <p className={`mt-2 leading-7 ${themeClasses.mutedText}`}>
-                  Managing creators, content, coordination, approvals and launch
-                  timelines with smoother campaign operations.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                <h4 className={`font-semibold ${themeClasses.heading}`}>
-                  03 · Scale
-                </h4>
-                <p className={`mt-2 leading-7 ${themeClasses.mutedText}`}>
-                  Tracking performance, learning from results and scaling the
-                  formats that deliver stronger growth.
-                </p>
+            <div className="p-[2px] rounded-[30px] bg-gradient-to-br from-purple-500 via-cyan-400 to-blue-500 shadow-2xl">
+              <div className="rounded-[28px] overflow-hidden bg-white">
+                <Image
+                  src="/hero.jpeg"
+                  alt="campaign"
+                  width={700}
+                  height={450}
+                  className="w-full h-[400px] object-cover"
+                />
               </div>
             </div>
+
+            <div className="absolute -bottom-6 -left-6 bg-white px-4 py-2 rounded-xl shadow border text-sm font-semibold">
+              🚀 High ROI Campaign
+            </div>
           </motion.div>
+        </div>
 
-          {/* CTA */}
-          <motion.div
-            {...fadeUp}
-            className="mt-20 text-center"
-          >
-            <h2 className={`text-3xl md:text-5xl font-black tracking-tight ${themeClasses.heroText}`}>
-              Want your campaign to be our next case study?
-            </h2>
+        {/* 🔥 CASE STUDY GRID */}
+        <div className="mt-24 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-            <p className={`mt-4 text-sm md:text-base max-w-2xl mx-auto leading-7 ${themeClasses.mutedText}`}>
-              Share your goals and we’ll design a custom influencer strategy for
-              your brand with the right creators, platforms and content approach.
-            </p>
-
-            <Link
-              href="/#lead-form"
-              className={`inline-flex items-center justify-center mt-8 px-8 py-4 rounded-full text-sm md:text-base shadow-xl ${themeClasses.button}`}
+          {projects.map((item, i) => (
+            <motion.div
+              key={i}
+              whileHover={{ y: -6 }}
+              className="group rounded-3xl overflow-hidden border bg-white shadow-sm hover:shadow-xl transition"
             >
-              Get Strategy Plan 🚀
-            </Link>
-          </motion.div>
-        </section>
-      </main>
-    </>
+              {/* IMAGE */}
+              <div className="relative">
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  width={400}
+                  height={300}
+                  className="w-full h-[220px] object-cover group-hover:scale-105 transition"
+                />
+
+                <span className="absolute top-3 left-3 bg-white px-3 py-1 text-xs rounded-full shadow">
+                  {item.category}
+                </span>
+              </div>
+
+              {/* CONTENT */}
+              <div className="p-5">
+                <h3 className="text-lg font-bold text-slate-900">
+                  {item.title}
+                </h3>
+
+                <p className="text-sm text-slate-600 mt-2">
+                  High-performing campaign delivering strong ROI through creators.
+                </p>
+
+                <button className="mt-4 text-cyan-600 font-semibold">
+                  View Case →
+                </button>
+              </div>
+            </motion.div>
+          ))}
+
+        </div>
+
+      </div>
+    </section>
   );
 }

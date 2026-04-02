@@ -1,107 +1,88 @@
+import Link from "next/link";
+
 const PROJECTS = [
   {
     title: "Fintech App Launch Campaign",
-    tag: "YouTube · Finance",
-    result: "2.9x ROAS · 1.4M+ views",
-    desc: "Executed a full-scale influencer launch with finance creators targeting high-intent users.",
+    category: "YouTube · Finance",
+    outcome: "2.9x ROAS · 1.4M+ views",
+    summary:
+      "Executed a creator-led launch strategy with finance educators and trusted niche voices to drive high-intent user acquisition.",
   },
   {
     title: "D2C Skincare Growth Program",
-    tag: "Instagram · D2C",
-    result: "+18% new customers",
-    desc: "Scaled customer acquisition using reels and micro-influencer collaborations.",
+    category: "Instagram · D2C",
+    outcome: "+18% new customers",
+    summary:
+      "Scaled acquisition using reels, creator whitelisting and repeat collaborations with micro-influencers in beauty and lifestyle.",
   },
   {
     title: "UGC Content Engine for SaaS",
-    tag: "UGC · SaaS",
-    result: "60+ ad-ready assets",
-    desc: "Built a UGC pipeline to generate high-converting ad creatives.",
+    category: "UGC · SaaS",
+    outcome: "60+ ad-ready assets",
+    summary:
+      "Built a repeatable UGC pipeline to produce conversion-focused content for paid campaigns, landing pages and testing.",
   },
   {
     title: "Gaming Brand Meme Campaign",
-    tag: "Memes · Gaming",
-    result: "4.5M impressions in 7 days",
-    desc: "Leveraged meme pages and viral content for rapid brand awareness.",
+    category: "Memes · Gaming",
+    outcome: "4.5M impressions in 7 days",
+    summary:
+      "Used meme pages, trend-native creative and fast execution to drive mass awareness during a high-attention product push.",
   },
 ];
 
 export default function WorkGallery() {
   return (
-    <section className="relative py-24 bg-white overflow-hidden">
+    <section id="work-preview" className="bg-slate-950 py-16 sm:py-20 md:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-cyan-400">
+              Selected Work
+            </p>
 
-      {/* 🌈 subtle aurora */}
-      <div className="absolute inset-0 -z-10">
-        <div className="aurora-bg w-full h-full opacity-20" />
-      </div>
+            <h2 className="mt-3 text-3xl font-extrabold tracking-[-0.02em] text-white sm:text-4xl">
+              Campaigns built for measurable outcomes
+            </h2>
 
-      <div className="max-w-6xl mx-auto px-6">
+            <p className="mt-4 max-w-xl text-base leading-7 text-slate-300">
+              A few examples of how we help brands use creators, UGC and
+              performance-led execution to generate awareness, acquisition and growth.
+            </p>
 
-        {/* 🔝 HEADER */}
-        <div className="text-center max-w-2xl mx-auto">
-          <p className="text-xs tracking-[0.25em] uppercase text-cyan-600 font-semibold">
-            Case Studies
-          </p>
-
-          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-slate-900">
-            Campaigns that{" "}
-            <span className="bg-gradient-to-r from-cyan-500 to-indigo-500 text-transparent bg-clip-text">
-              drive real results
-            </span>
-          </h2>
-
-          <p className="mt-4 text-slate-600">
-            A snapshot of how Vmerg helps brands scale using influencer-led
-            growth strategies across multiple industries.
-          </p>
-        </div>
-
-        {/* 🧩 GRID */}
-        <div className="mt-14 grid gap-6 md:grid-cols-2">
-
-          {PROJECTS.map((p, idx) => (
-            <div
-              key={idx}
-              className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-xl hover:border-cyan-400 transition"
+            <Link
+              href="/work"
+              className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-400 hover:text-cyan-300"
             >
-              {/* TAG */}
-              <p className="text-[11px] uppercase tracking-[0.22em] text-cyan-600 font-semibold">
-                {p.tag}
-              </p>
+              Explore all work
+              <span>→</span>
+            </Link>
+          </div>
 
-              {/* TITLE */}
-              <h3 className="mt-2 text-lg font-semibold text-slate-900 group-hover:text-cyan-600 transition">
-                {p.title}
-              </h3>
+          <div className="grid gap-5 md:grid-cols-2">
+            {PROJECTS.map((project) => (
+              <article
+                key={project.title}
+                className="rounded-3xl border border-white/10 bg-white/5 p-6 transition duration-300 hover:-translate-y-1 hover:border-cyan-400/40 hover:bg-white/[0.07]"
+              >
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-300">
+                  {project.category}
+                </p>
 
-              {/* RESULT */}
-              <p className="mt-2 text-sm font-medium text-indigo-600">
-                {p.result}
-              </p>
+                <h3 className="mt-3 text-xl font-semibold leading-snug text-white">
+                  {project.title}
+                </h3>
 
-              {/* DESCRIPTION */}
-              <p className="mt-3 text-sm text-slate-600 leading-relaxed">
-                {p.desc}
-              </p>
+                <p className="mt-3 text-sm font-semibold text-emerald-300">
+                  {project.outcome}
+                </p>
 
-              {/* CTA */}
-              <button className="mt-4 inline-flex items-center text-sm font-medium text-cyan-600 group-hover:text-indigo-600 transition">
-                View full case study
-                <span className="ml-1 group-hover:translate-x-1 transition">
-                  →
-                </span>
-              </button>
-            </div>
-          ))}
-        </div>
-
-        {/* 🔗 FOOTER LINK */}
-        <div className="mt-12 text-center">
-          <a
-            href="/work"
-            className="text-sm text-slate-600 hover:text-cyan-600 transition"
-          >
-            Explore all campaigns →
-          </a>
+                <p className="mt-4 text-sm leading-6 text-slate-300">
+                  {project.summary}
+                </p>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

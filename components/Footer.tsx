@@ -12,165 +12,195 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="relative mt-32 px-4">
+    <footer className="relative mt-24 border-t border-slate-200 bg-gradient-to-b from-white to-slate-100/70">
 
-      {/* 🌈 FLOATING BACKGROUND GLOW */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-cyan-200/30 via-indigo-200/20 to-purple-200/30 blur-3xl animate-pulse" />
-      </div>
+      {/* GLOW */}
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(6,182,212,0.08),transparent_60%)]" />
 
-      {/* 💎 FLOATING CARD */}
-      <div className="max-w-7xl mx-auto rounded-[2.5rem] bg-white/80 backdrop-blur-2xl border border-white/40 shadow-2xl px-6 py-16 transition-all duration-500 hover:shadow-[0_20px_80px_rgba(0,0,0,0.15)]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* 🔝 TOP */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8 pb-10 border-b border-slate-200">
-          
-          <div>
-            <h3 className="text-4xl font-black bg-gradient-to-r from-cyan-500 to-indigo-500 bg-clip-text text-transparent mb-4">
-              Vmerg
-            </h3>
+        <div className="py-16 lg:py-20">
 
-            <p className="text-lg text-slate-600 max-w-lg leading-relaxed">
-              End-to-End Influencer Marketing Solutions | Bangalore | 10+ Categories | 24/7 Support
-            </p>
-          </div>
+          {/* TOP */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
-          <div className="flex flex-col sm:flex-row gap-4">
-            <a 
-              href="tel:+918660783740"
-              className="px-8 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-500 text-white shadow-md hover:scale-105 transition"
-            >
-              Contact Sales
-            </a>
+            {/* LEFT */}
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-3xl font-black text-slate-950">Vmerg</h3>
+                <p className="mt-3 text-slate-600 max-w-md">
+                  Scale your brand with performance-driven influencer campaigns.
+                  We handle creator discovery, campaign execution, and optimization.
+                </p>
+              </div>
 
-            <a 
-              href="mailto:careers@vmerg.com"
-              className="px-8 py-3 rounded-xl border border-slate-300 hover:border-cyan-500 hover:text-cyan-600 transition"
-            >
-              Apply for Jobs
-            </a>
-          </div>
+              {/* CTA */}
+              <div className="flex gap-4 flex-wrap">
+                <a
+                  href="tel:+918660783740"
+                  className="flex items-center gap-2 bg-slate-950 text-white px-6 py-3 rounded-xl hover:bg-slate-800 transition"
+                >
+                  <Phone size={16} />
+                  Contact Sales
+                </a>
 
-        </div>
-
-        {/* 🧩 LINKS */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 py-16 text-sm">
-
-          {/* Categories */}
-          <div>
-            <h4 className="font-bold text-lg mb-6 text-slate-900">
-              Categories
-            </h4>
-
-            <ul className="space-y-3 text-slate-600">
-              {["Beauty", "Gaming", "Finance", "Comedy", "Tech"].map((item) => (
-                <li key={item} className="hover:text-cyan-600 cursor-pointer transition">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h4 className="font-bold text-lg mb-6 text-slate-900">
-              Company
-            </h4>
-
-            <ul className="space-y-3 text-slate-600">
-              {["About", "Blog", "Careers", "FAQ", "Contact"].map((item) => (
-                <li key={item} className="hover:text-cyan-600 cursor-pointer transition">
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h4 className="font-bold text-lg mb-6 text-slate-900">
-              Contact
-            </h4>
-
-            <ul className="space-y-3 text-slate-600">
-
-              <li className="flex items-center gap-2">
-                <Phone size={16} className="text-cyan-500" />
-                +91 86607 83740
-              </li>
-
-              <li className="flex items-center gap-2">
-                <MessageCircle size={16} className="text-green-500" />
-                <a href="https://wa.me/916362621090" className="hover:text-green-600">
+                <a
+                  href="https://wa.me/918660783740"
+                  target="_blank"
+                  className="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-6 py-3 rounded-xl border hover:bg-emerald-100 transition"
+                >
+                  <MessageCircle size={16} />
                   WhatsApp
                 </a>
-              </li>
+              </div>
+            </div>
 
-              <li className="flex items-center gap-2">
-                <Mail size={16} className="text-indigo-500" />
-                <a href="mailto:vinay@vmerg.com" className="hover:text-indigo-600">
-                  vinay@vmerg.com
-                </a>
-              </li>
+            {/* RIGHT */}
+            <div className="grid sm:grid-cols-2 gap-8">
 
-              <li className="text-xs text-slate-500">
-                Bangalore, India
-              </li>
+              {/* LINKS */}
+              <div>
+                <h4 className="font-bold mb-4">Quick Links</h4>
+                <ul className="space-y-2 text-sm">
+                  {[
+                    { name: "About", link: "/about" },
+                    { name: "Services", link: "/services" },
+                    { name: "Work", link: "/work" },
+                    { name: "Brands", link: "/brands" },
+                    { name: "Creators", link: "/creators" },
+                  ].map((item) => (
+                    <li key={item.name}>
+                      <a href={item.link} className="hover:text-cyan-600 transition">
+                        {item.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-            </ul>
-          </div>
-
-          {/* 🔥 SOCIAL ICONS */}
-          <div>
-            <h4 className="font-bold text-lg mb-6 text-slate-900">
-              Connect
-            </h4>
-
-            <div className="grid grid-cols-2 gap-3">
-
-              {[
-                { href: "https://www.instagram.com/vmerg_", icon: Instagram },
-                { href: "https://twitter.com/vmerg_", icon: Twitter },
-                { href: "https://www.linkedin.com/company/vmerg", icon: Linkedin },
-                { href: "https://www.facebook.com/vmerg", icon: Facebook },
-              ].map(({ href, icon: Icon }, i) => (
-                <a
-                  key={i}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="h-12 flex items-center justify-center rounded-xl bg-white border border-slate-200 shadow-sm hover:scale-105 hover:border-cyan-400 hover:bg-cyan-50 transition"
-                >
-                  <Icon className="w-5 h-5 text-slate-600 hover:text-cyan-600" />
-                </a>
-              ))}
+              {/* CONTACT */}
+              <div>
+                <h4 className="font-bold mb-4">Contact</h4>
+                <ul className="space-y-3 text-sm">
+                  <li className="flex gap-2 items-center">
+                    <Phone size={16} />
+                    <a href="tel:+918660783740">+91 86607 83740</a>
+                  </li>
+                  <li className="flex gap-2 items-center">
+                    <Mail size={16} />
+                    <a href="mailto:vmergmedia@gmail.com">
+                      vmergmedia@gmail.com
+                    </a>
+                  </li>
+                  <li>📍 Vmerg Media Pvt Ltd, Bengaluru, India</li>
+                </ul>
+              </div>
 
             </div>
           </div>
 
-        </div>
+          {/* MID */}
+          <div className="mt-16 pt-10 border-t grid md:grid-cols-3 gap-10">
 
-        {/* ⚡ BOTTOM */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 border-t border-slate-200 pt-6 text-sm text-slate-500">
-          
-          <p>© 2026 Vmerg Media Private Limited</p>
+            {/* CATEGORIES */}
+            <div>
+              <h4 className="font-semibold mb-4">Categories</h4>
+              <div className="flex flex-wrap gap-2 text-xs">
+                {["Beauty", "Tech", "Finance", "Gaming", "Lifestyle"].map((c) => (
+                  <span key={c} className="px-3 py-1 border rounded-full hover:bg-cyan-50 transition">
+                    {c}
+                  </span>
+                ))}
+              </div>
+            </div>
 
-          <div className="flex gap-6">
-            <span className="hover:text-cyan-600 cursor-pointer">Privacy</span>
-            <span className="hover:text-cyan-600 cursor-pointer">Terms</span>
+            {/* 🔥 SOCIAL PREMIUM */}
+            <div>
+              <h4 className="font-semibold mb-4">Follow Us</h4>
+
+              <div className="flex gap-4">
+
+                {[
+                  {
+                    href: "https://www.instagram.com/vmerg_/",
+                    icon: Instagram,
+                    color: "from-pink-500 via-red-500 to-yellow-500",
+                    label: "Instagram",
+                  },
+                  {
+                    href: "https://x.com/vmerg_",
+                    icon: Twitter,
+                    color: "from-slate-800 to-black",
+                    label: "X",
+                  },
+                  {
+                    href: "https://www.linkedin.com/company/vmerg/",
+                    icon: Linkedin,
+                    color: "from-blue-500 to-blue-700",
+                    label: "LinkedIn",
+                  },
+                  {
+                    href: "#",
+                    icon: Facebook,
+                    color: "from-blue-400 to-blue-600",
+                    label: "Facebook",
+                  },
+                ].map(({ href, icon: Icon, color, label }, i) => (
+
+                  <a
+                    key={i}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative"
+                  >
+
+                    {/* ICON */}
+                    <div
+                      className={`w-12 h-12 flex items-center justify-center rounded-xl bg-gradient-to-br ${color} text-white shadow-md transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl`}
+                    >
+                      <Icon size={18} />
+                    </div>
+
+                    {/* TOOLTIP */}
+                    <span className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-slate-900 px-3 py-1 text-xs text-white opacity-0 group-hover:opacity-100 transition">
+                      {label}
+                    </span>
+
+                  </a>
+                ))}
+
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="bg-emerald-50 p-5 rounded-xl border">
+              <h4 className="font-semibold mb-2">Quick Campaign Setup</h4>
+              <p className="text-sm mb-3">
+                Start your campaign planning instantly.
+              </p>
+              <a
+                href="https://wa.me/918660783740"
+                target="_blank"
+                className="text-emerald-700 font-semibold"
+              >
+                Start Now →
+              </a>
+            </div>
+
+          </div>
+
+          {/* BOTTOM */}
+          <div className="mt-10 pt-6 border-t flex flex-col md:flex-row justify-between text-sm text-slate-500 gap-4">
+            <p>© 2026 Vmerg Media Pvt Ltd</p>
+            <div className="flex gap-4">
+              <a href="#">Privacy</a>
+              <a href="#">Terms</a>
+            </div>
           </div>
 
         </div>
-
       </div>
-
-      {/* 🌈 AURORA ANIMATION */}
-      <style jsx>{`
-        .aurora-bg {
-          filter: blur(120px);
-        }
-      `}</style>
-
     </footer>
   );
 }

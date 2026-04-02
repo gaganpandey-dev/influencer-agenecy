@@ -1,105 +1,125 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react";
-import { Phone, Mail, MessageCircle } from "lucide-react"; // ✅ ADD THIS
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  ReactNode,
+} from "react";
 
-const ThemeContext = createContext<any>(undefined);
+type Theme = "light" | "dark" | "system";
+type ResolvedTheme = "light" | "dark";
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+interface ThemeContextType {
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+  resolvedTheme: ResolvedTheme;
+  mounted: boolean;
+}
+
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+const STORAGE_KEY = "theme-preference";
+
+function getSystemTheme(): ResolvedTheme {
+  if (typeof window === "undefined") return "light";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
+
+export function ThemeProvider({ children }: { children: ReactNode }) {
+  const [theme, setThemeState] = useState<Theme>("system");
+  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("light");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add(theme);
-  }, [theme]);
+    setMounted(true);
 
-  const toggleTheme = () =>
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    const savedTheme = localStorage.getItem(STORAGE_KEY) as Theme | null;
+    const initialTheme: Theme =
+      savedTheme === "light" || savedTheme === "dark" || savedTheme === "system"
+        ? savedTheme
+        : "system";
 
-  const vmerg = {
-    name: "Vmerg",
-    tagline: "End-to-End Influencer Marketing Powerhouse",
-    founded: "2021",
-    cin: "U74999KA2021PTC153669",
-    contacts: {
-      phone: "+91 86607 83740",
-      whatsapp: "916362621090",
-      email: "vinay@vmerg.com",
-    },
+    setThemeState(initialTheme);
+    setResolvedTheme(
+      initialTheme === "system" ? getSystemTheme() : initialTheme
+    );
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const handleChange = () => {
+      if (theme === "system") {
+        setResolvedTheme(mediaQuery.matches ? "dark" : "light");
+      }
+    };
+
+    handleChange();
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener("change", handleChange);
+    } else {
+      mediaQuery.addListener(handleChange);
+    }
+
+    return () => {
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener("change", handleChange);
+      } else {
+        mediaQuery.removeListener(handleChange);
+      }
+    };
+  }, [theme, mounted]);
+
+  useEffect(() => {
+    if (!mounted) return;
+
+    const root = document.documentElement;
+    const finalTheme = theme === "system" ? getSystemTheme() : theme;
+
+    setResolvedTheme(finalTheme);
+
+    root.setAttribute("data-theme", finalTheme);
+    root.classList.remove("light", "dark");
+    root.classList.add(finalTheme);
+
+    localStorage.setItem(STORAGE_KEY, theme);
+  }, [theme, mounted]);
+
+  const setTheme = (newTheme: Theme) => {
+    setThemeState(newTheme);
   };
 
+  const value = useMemo(
+    () => ({
+      theme,
+      setTheme,
+      resolvedTheme,
+      mounted,
+    }),
+    [theme, resolvedTheme, mounted]
+  );
+
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, vmerg }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );
 }
 
 export function useTheme() {
-  return useContext(ThemeContext);
-}
+  const context = useContext(ThemeContext);
 
-//
-// 🔥 BRAND COMPONENTS (UPDATED)
-//
+  if (!context) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
 
-export function VmergLogo({ size = "lg" }: { size?: string }) {
-  const sizes = {
-    sm: "text-2xl",
-    md: "text-3xl",
-    lg: "text-4xl",
-  };
-
-  return (
-    <div
-      className={`font-black tracking-tight bg-gradient-to-r from-cyan-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent ${
-        sizes[size as keyof typeof sizes] || sizes.lg
-      }`}
-    >
-      Vmerg
-    </div>
-  );
-}
-
-export function VmergTagline() {
-  return (
-    <p className="text-lg font-medium text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
-      End-to-End Influencer Marketing | 10+ Categories | 24/7 Global Operations
-    </p>
-  );
-}
-
-export function VmergContactRow() {
-  return (
-    <div className="flex flex-wrap items-center justify-center gap-6 bg-white/80 dark:bg-slate-800/70 backdrop-blur-xl p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-md">
-
-      {/* 📞 PHONE */}
-      <a
-        href="tel:+918660783740"
-        className="flex items-center gap-2 font-semibold text-slate-800 dark:text-slate-200 hover:text-cyan-600 transition"
-      >
-        <Phone size={18} className="text-cyan-600" />
-        +91 86607 83740
-      </a>
-
-      {/* 💬 WHATSAPP */}
-      <a
-        href="https://wa.me/916362621090"
-        className="flex items-center gap-2 font-semibold text-slate-800 dark:text-slate-200 hover:text-green-600 transition"
-      >
-        <MessageCircle size={18} className="text-green-500" />
-        WhatsApp
-      </a>
-
-      {/* 📧 EMAIL */}
-      <a
-        href="mailto:vinay@vmerg.com"
-        className="flex items-center gap-2 font-semibold text-slate-800 dark:text-slate-200 hover:text-indigo-600 transition"
-      >
-        <Mail size={18} className="text-indigo-500" />
-        vinay@vmerg.com
-      </a>
-
-    </div>
-  );
+  return context;
 }

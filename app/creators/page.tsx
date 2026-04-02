@@ -1,251 +1,281 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useState } from "react";
-import { useTheme } from "../context/ThemeContext"; // ✅ FIXED: Changed from "@/context/ThemeContext"
+import Navbar from "@/components/Navbar";
+import { motion } from "framer-motion";
 
-const fadeUp = {
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.2 },
-  transition: { duration: 0.6, ease: "easeOut" },
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 40 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const },
+  },
 };
 
 export default function CreatorsPage() {
-  const { themeClasses } = useTheme();
-
   const [form, setForm] = useState({
     name: "",
-    email: "",
+    instagram: "",
     niche: "",
     followers: "",
-    platform: "",
   });
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(form);
-    alert("Application submitted 🚀");
+
+    const text = encodeURIComponent(
+      `Creator Application - VMerg Media
+Name: ${form.name}
+Instagram: ${form.instagram}
+Niche: ${form.niche}
+Followers: ${form.followers}
+Ready to collaborate with brands!`
+    );
+
+    window.open(`https://wa.me/918660783740?text=${text}`, "_blank");
   };
+
+  const perks = [
+    "₹50K+ monthly payouts",
+    "Weekly payments",
+    "500+ trusted brands",
+    "Content creation support",
+    "Performance analytics",
+    "24hr creator support",
+  ];
+
+  const niches = [
+    "Beauty",
+    "Fashion",
+    "Finance",
+    "Crypto",
+    "Fitness",
+    "Lifestyle",
+    "Tech",
+    "Food",
+  ];
 
   return (
-    <main className={`relative overflow-hidden min-h-screen ${themeClasses.pageBg}`}>
-      <div className="absolute inset-0 -z-10">
-        <div
-          className={`absolute inset-0 bg-gradient-to-br ${themeClasses.sectionGlow}`}
-        />
-        <div className="absolute -top-24 right-0 h-72 w-72 rounded-full bg-white/5 blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 -left-16 h-80 w-80 rounded-full bg-white/5 blur-3xl animate-pulse" />
-      </div>
+    <>
+      <Navbar activeSection="/creators" />
 
-      <div className="px-6 md:px-12 py-16 md:py-24 max-w-6xl mx-auto">
-        {/* HERO */}
-        <section className="text-center">
+      <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-purple-50 via-pink-50/80 to-fuchsia-50/60">
+        <div className="pointer-events-none absolute inset-0">
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55 }}
-            className={`inline-flex items-center rounded-full px-4 py-2 text-sm font-medium backdrop-blur-xl ${themeClasses.badge}`}
+            className="absolute -left-40 top-1/4 h-80 w-80 rounded-full bg-gradient-to-r from-purple-200/40 to-pink-200/30 blur-3xl"
+            animate={{ y: [0, -30, 0], scale: [1, 1.05, 1] }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            }}
+          />
+          <motion.div
+            className="absolute -right-32 bottom-1/4 h-72 w-72 rounded-full bg-gradient-to-r from-fuchsia-200/40 to-pink-200/30 blur-3xl"
+            animate={{ y: [0, 30, 0], scale: [1, 1.03, 1] }}
+            transition={{
+              duration: 7,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+              delay: 1,
+            }}
+          />
+        </div>
+
+        <section className="relative z-10 mx-auto max-w-7xl px-4 pb-24 pt-28 md:pb-32 md:pt-36 lg:pb-40">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+            className="grid items-start gap-16 lg:grid-cols-[1.2fr_1fr] lg:gap-20"
           >
-            Creator Growth Network
-          </motion.div>
+            <motion.div variants={itemVariants} className="space-y-10 lg:max-w-2xl">
+              <motion.span
+                variants={itemVariants}
+                className="inline-flex items-center gap-3 rounded-3xl border-2 border-purple-200/70 bg-gradient-to-r from-purple-50/90 to-white/95 px-8 py-4 text-sm font-black uppercase tracking-[0.3em] text-slate-800 shadow-2xl backdrop-blur-xl transition-all duration-500 hover:scale-105 hover:bg-purple-50/80"
+              >
+                <div className="h-3 w-3 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 shadow-lg" />
+                For Creators
+              </motion.span>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.1 }}
-            className={`mt-6 text-4xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight ${themeClasses.heroText}`}
-          >
-            Work with Top Brands &{" "}
-            <span className={themeClasses.gradientText}>
-              Grow Your Influence
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.2 }}
-            className={`mt-6 text-base md:text-lg max-w-2xl mx-auto leading-8 ${themeClasses.mutedText}`}
-          >
-            Join <span className="font-semibold text-white">Vmerg</span> and unlock
-            high-paying collaborations, consistent campaigns, and long-term creator
-            growth with a professional campaign team.
-          </motion.p>
-
-          <motion.a
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            href="#join-form"
-            className={`inline-flex items-center mt-8 px-8 py-3.5 rounded-full text-sm md:text-base shadow-xl ${themeClasses.button}`}
-          >
-            Join as Creator 🚀
-          </motion.a>
-        </section>
-
-        {/* BENEFITS */}
-        <section className="mt-20 md:mt-24 grid md:grid-cols-3 gap-6 md:gap-8 text-left">
-          {[
-            {
-              title: "Top Brand Deals",
-              desc: "Collaborate with strong consumer brands across lifestyle, tech, beauty, finance and more.",
-            },
-            {
-              title: "Consistent Income",
-              desc: "Get access to recurring paid campaigns and long-term partnership opportunities.",
-            },
-            {
-              title: "Fast Payments",
-              desc: "Enjoy transparent communication, smooth workflow handling and timely payout support.",
-            },
-          ].map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55, delay: i * 0.12 }}
-              className={`rounded-3xl p-7 md:p-8 shadow-lg ${themeClasses.card}`}
-            >
-              <div className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold ${themeClasses.badge}`}>
-                Benefit {i + 1}
-              </div>
-              <h3 className={`mt-5 text-xl font-semibold tracking-tight ${themeClasses.heading}`}>
-                {item.title}
-              </h3>
-              <p className={`mt-3 text-sm md:text-base leading-7 ${themeClasses.mutedText}`}>
-                {item.desc}
-              </p>
-            </motion.div>
-          ))}
-        </section>
-
-        {/* PROCESS */}
-        <motion.section {...fadeUp} className="mt-20 md:mt-24 text-center">
-          <h2 className={`text-3xl md:text-4xl font-black tracking-tight ${themeClasses.heroText}`}>
-            How It Works
-          </h2>
-
-          <div className="mt-10 grid md:grid-cols-4 gap-5 md:gap-6 text-left">
-            {["Apply", "Get Verified", "Receive Campaigns", "Get Paid"].map(
-              (step, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 18 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className={`rounded-2xl p-6 ${themeClasses.card}`}
+              <motion.h1
+                variants={itemVariants}
+                className="text-5xl font-black leading-[0.92] tracking-[-0.05em] md:text-7xl lg:text-[8rem]"
+              >
+                <motion.span
+                  className="block bg-gradient-to-r from-slate-950 via-slate-900 to-slate-800 bg-clip-text text-transparent"
+                  whileHover={{ scale: 1.02 }}
                 >
-                  <p className={`text-sm font-bold ${themeClasses.gradientText}`}>
-                    Step {i + 1}
-                  </p>
-                  <h3 className={`mt-2 text-lg font-semibold ${themeClasses.heading}`}>
-                    {step}
-                  </h3>
-                  <p className={`mt-2 text-sm leading-6 ${themeClasses.mutedText}`}>
-                    A smooth creator onboarding flow built for faster campaign readiness.
-                  </p>
-                </motion.div>
-              )
-            )}
-          </div>
-        </motion.section>
+                  Join
+                </motion.span>
+                <motion.span
+                  className="block bg-gradient-to-r from-purple-800 via-pink-900 to-slate-900 bg-clip-text text-transparent"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  10K+
+                </motion.span>
+                <motion.span className="inline-block bg-gradient-to-r from-fuchsia-700 via-pink-800 to-purple-900 bg-clip-text text-transparent">
+                  Creators
+                </motion.span>
+              </motion.h1>
 
-        {/* TRUST */}
-        <motion.section {...fadeUp} className="mt-20 md:mt-24 text-center">
-          <div className={`rounded-3xl p-10 md:p-12 shadow-xl ${themeClasses.card}`}>
-            <h2 className={`text-2xl md:text-3xl font-black tracking-tight ${themeClasses.heroText}`}>
-              Trusted by 1000+ Creators
-            </h2>
-            <p className={`mt-4 text-sm md:text-base max-w-2xl mx-auto leading-7 ${themeClasses.mutedText}`}>
-              Build your influence with structured brand collaborations, clearer campaign communication, and better growth opportunities.
-            </p>
-          </div>
-        </motion.section>
-
-        {/* FORM */}
-        <section id="join-form" className="mt-24 md:mt-28">
-          <motion.div
-            initial={{ opacity: 0, y: 26 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className={`rounded-[2rem] border p-10 md:p-14 text-center shadow-2xl ${themeClasses.card}`}
-          >
-            <h2 className={`text-3xl md:text-4xl font-black tracking-tight ${themeClasses.heroText}`}>
-              Apply as Creator 🚀
-            </h2>
-
-            <p className={`mt-4 text-sm md:text-base max-w-xl mx-auto leading-7 ${themeClasses.mutedText}`}>
-              Share your basic profile details and we'll review your fit for upcoming collaborations.
-            </p>
-
-            <form
-              onSubmit={handleSubmit}
-              className="mt-10 grid gap-4 max-w-xl mx-auto"
-            >
-              <input
-                name="name"
-                placeholder="Your Name"
-                value={form.name}
-                onChange={handleChange}
-                className={`p-4 rounded-2xl outline-none transition-all duration-300 ${themeClasses.input}`}
-              />
-
-              <input
-                name="email"
-                placeholder="Email Address"
-                value={form.email}
-                onChange={handleChange}
-                className={`p-4 rounded-2xl outline-none transition-all duration-300 ${themeClasses.input}`}
-              />
-
-              <input
-                name="niche"
-                placeholder="Your Niche"
-                value={form.niche}
-                onChange={handleChange}
-                className={`p-4 rounded-2xl outline-none transition-all duration-300 ${themeClasses.input}`}
-              />
-
-              <input
-                name="followers"
-                placeholder="Follower Count"
-                value={form.followers}
-                onChange={handleChange}
-                className={`p-4 rounded-2xl outline-none transition-all duration-300 ${themeClasses.input}`}
-              />
-
-              <select
-                name="platform"
-                value={form.platform}
-                onChange={handleChange}
-                className={`p-4 rounded-2xl outline-none transition-all duration-300 ${themeClasses.input}`}
+              <motion.p
+                variants={itemVariants}
+                className="max-w-xl text-xl leading-8 text-slate-700 backdrop-blur-sm"
               >
-                <option value="">Platform</option>
-                <option>Instagram</option>
-                <option>YouTube</option>
-                <option>Both</option>
-              </select>
+                Get paid by 500+ trusted brands. Weekly payouts. Content support.
+                <strong className="font-semibold text-slate-900">
+                  {" "}₹50K+ monthly earnings potential.
+                </strong>
+              </motion.p>
 
-              <button
-                type="submit"
-                className={`mt-4 py-4 rounded-full text-sm md:text-base shadow-xl ${themeClasses.button}`}
-              >
-                Submit 🚀
-              </button>
-            </form>
+              <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4">
+                {perks.map((perk) => (
+                  <motion.div
+                    key={perk}
+                    className="group flex items-center gap-3 rounded-2xl border border-purple-200/50 bg-white/90 p-6 shadow-xl backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:bg-purple-50/80 hover:shadow-2xl hover:shadow-purple-500/20"
+                    whileHover={{ scale: 1.02 }}
+                  >
+                    <div className="h-3 w-3 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 shadow-lg transition-transform duration-300 group-hover:scale-125" />
+                    <span className="text-sm font-semibold text-slate-800 group-hover:text-purple-700">
+                      {perk}
+                    </span>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
+
+            <motion.div variants={itemVariants}>
+              <div className="relative">
+                <motion.div
+                  className="absolute inset-0 -z-10 rounded-[2rem] bg-gradient-to-br from-purple-50/95 via-white/90 to-pink-50/80 shadow-2xl backdrop-blur-3xl"
+                  animate={{ scale: [1, 1.02, 1], rotate: [-0.5, 0.5, 0] }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    ease: "easeInOut",
+                  }}
+                />
+                <motion.form
+                  onSubmit={handleSubmit}
+                  className="relative rounded-[2rem] border-2 border-white/60 bg-gradient-to-br from-white/95 to-purple-50/95 p-8 shadow-2xl backdrop-blur-3xl transition-all duration-700 hover:-translate-y-2 md:p-12"
+                  initial={{ y: 50, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                >
+                  <div className="mb-10 text-center">
+                    <motion.p
+                      className="mb-4 inline-flex items-center gap-2 rounded-full bg-purple-100/80 px-6 py-2 text-sm font-black uppercase tracking-widest text-purple-700"
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      <div className="h-2 w-2 rounded-full bg-purple-500" />
+                      Apply Now
+                    </motion.p>
+
+                    <motion.h3
+                      className="mb-4 bg-gradient-to-r from-slate-950 via-slate-900 to-purple-800 bg-clip-text text-4xl font-black text-transparent md:text-5xl"
+                      whileHover={{ scale: 1.02 }}
+                    >
+                      Join VMerg Creators
+                    </motion.h3>
+
+                    <motion.p
+                      className="mx-auto max-w-md text-lg leading-relaxed text-slate-700"
+                      whileHover={{ scale: 1.01 }}
+                    >
+                      3 minute application. Get brand deals in 24hrs.
+                    </motion.p>
+                  </div>
+
+                  <div className="space-y-6">
+                    <motion.input
+                      name="name"
+                      placeholder="Full Name *"
+                      value={form.name}
+                      onChange={handleChange}
+                      className="w-full rounded-3xl border-2 border-slate-200/70 bg-white/95 px-6 py-5 text-lg font-semibold text-slate-900 shadow-lg backdrop-blur-xl transition-all duration-300 placeholder:text-slate-500 hover:border-purple-300/80 focus:border-purple-400 focus:outline-none focus:ring-4 focus:ring-purple-200/60"
+                      whileFocus={{ scale: 1.02, y: -2 }}
+                      required
+                    />
+
+                    <motion.input
+                      name="instagram"
+                      placeholder="@instagram handle *"
+                      value={form.instagram}
+                      onChange={handleChange}
+                      className="w-full rounded-3xl border-2 border-slate-200/70 bg-white/95 px-6 py-5 text-lg font-semibold text-slate-900 shadow-lg backdrop-blur-xl transition-all duration-300 placeholder:text-slate-500 hover:border-purple-300/80 focus:border-purple-400 focus:outline-none focus:ring-4 focus:ring-purple-200/60"
+                      whileFocus={{ scale: 1.02, y: -2 }}
+                      required
+                    />
+
+                    <motion.select
+                      name="niche"
+                      value={form.niche}
+                      onChange={handleChange}
+                      className="w-full appearance-none rounded-3xl border-2 border-slate-200/70 bg-white/95 px-6 py-5 text-lg font-semibold text-slate-900 shadow-lg backdrop-blur-xl transition-all duration-300 hover:border-purple-300/80 focus:border-purple-400 focus:outline-none focus:ring-4 focus:ring-purple-200/60"
+                      whileFocus={{ scale: 1.02, y: -2 }}
+                      required
+                    >
+                      <option value="" disabled>
+                        Select Your Niche
+                      </option>
+                      {niches.map((niche) => (
+                        <option key={niche} value={niche}>
+                          {niche}
+                        </option>
+                      ))}
+                    </motion.select>
+
+                    <motion.input
+                      name="followers"
+                      placeholder="Followers (e.g. 10K, 50K)"
+                      value={form.followers}
+                      onChange={handleChange}
+                      className="w-full rounded-3xl border-2 border-slate-200/70 bg-white/95 px-6 py-5 text-lg font-semibold text-slate-900 shadow-lg backdrop-blur-xl transition-all duration-300 placeholder:text-slate-500 hover:border-purple-300/80 focus:border-purple-400 focus:outline-none focus:ring-4 focus:ring-purple-200/60"
+                      whileFocus={{ scale: 1.02, y: -2 }}
+                      required
+                    />
+
+                    <motion.button
+                      type="submit"
+                      className="group relative w-full overflow-hidden rounded-[2rem] bg-gradient-to-r from-purple-600 via-pink-600 to-fuchsia-600 px-8 py-7 text-xl font-black text-white shadow-2xl transition-all duration-500 hover:shadow-2xl"
+                      whileHover={{
+                        scale: 1.03,
+                        boxShadow: "0 25px 50px -12px rgba(147, 51, 234, 0.4)",
+                      }}
+                      whileTap={{ scale: 0.97 }}
+                    >
+                      <span className="relative z-10 flex items-center justify-center gap-3 font-black tracking-wide">
+                        Join Creators Now
+                      </span>
+                    </motion.button>
+                  </div>
+                </motion.form>
+              </div>
+            </motion.div>
           </motion.div>
         </section>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }

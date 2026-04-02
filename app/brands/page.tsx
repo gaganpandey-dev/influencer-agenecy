@@ -1,8 +1,40 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import Navbar from "@/components/Navbar";
+import { motion } from "framer-motion";
+
+const heroWrap = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.15,
+    },
+  },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] as const },
+  },
+};
+
+const floatCard = {
+  hidden: { opacity: 0, y: 30, scale: 0.96 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.25, 0.46, 0.45, 0.94] as const,
+    },
+  },
+};
 
 export default function BrandsPage() {
   const [form, setForm] = useState({
@@ -12,327 +44,314 @@ export default function BrandsPage() {
     budget: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Lead:", form);
-    // Replace alert with better UX
-    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
-    submitBtn.innerText = 'Sending...';
-    setTimeout(() => {
-      submitBtn.innerText = 'Get Free Strategy 🚀';
-      alert("Submitted successfully! We'll reach out within 24 hours 🚀");
-    }, 1500);
+
+    const text = encodeURIComponent(
+      `Brand Campaign Inquiry - VMerg Media
+Name: ${form.name}
+Email: ${form.email}
+Brand: ${form.brand}
+Budget: ${form.budget}
+Ready to launch creator campaign!`
+    );
+
+    window.open(`https://wa.me/918660783740?text=${text}`, "_blank");
   };
+
+  const stats = [
+    { title: "Avg Campaign ROI", value: "3.8x", subtitle: "vs industry 2.1x", icon: "📊" },
+    { title: "Trusted Brands", value: "500+", subtitle: "Live campaigns", icon: "🏢" },
+    { title: "Influencers", value: "10K+", subtitle: "Vetted creators", icon: "👥" },
+  ];
+
+  const topInfluencers = [
+    "Sushmita Sen",
+    "Garima Chaurasia",
+    "Rachana Ranade",
+    "Neha Nagar",
+    "iam.savithri",
+    "Yashika Crypto",
+    "financebyankita",
+    "ca.bhagyashreethakkar",
+    "navyanoor_astrotarot",
+  ];
+
+  const trustedBrands = [
+    "CoinSwitch",
+    "Kotak Mahindra",
+    "Bybit",
+    "OZiva",
+    "Fast&Up",
+    "Masai School",
+    "Rapido",
+    "Uniqlo",
+  ];
 
   return (
-    <div className="relative px-6 md:px-12 py-16 max-w-7xl mx-auto overflow-hidden">
-      {/* Animated background particles */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-cyan-500/5 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse delay-1000" />
-      </div>
+    <>
+      <Navbar activeSection="/brands" />
 
-      {/* 🔥 HERO - Enhanced with staggered animation */}
-      <motion.section 
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center relative z-10 mb-24"
-      >
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="inline-block px-4 py-2 bg-gradient-to-r from-cyan-500/20 to-indigo-500/20 rounded-full backdrop-blur-sm border border-cyan-500/30 mb-8"
-        >
-          <span className="text-sm font-medium text-cyan-300 tracking-wide uppercase">
-            Scale with Creators
-          </span>
-        </motion.div>
-        
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] tracking-tight bg-gradient-to-r from-slate-100 via-white to-slate-200 text-transparent bg-clip-text mb-8"
-        >
-          Scale Your Brand with{" "}
-          <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-500 text-transparent bg-clip-text drop-shadow-2xl">
-            Influencer Campaigns
-          </span>
-        </motion.h1>
+      <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-50 via-amber-50/80 to-emerald-50/60">
+        <div className="pointer-events-none absolute inset-0">
+          <motion.div
+            className="absolute -left-40 top-1/4 h-80 w-80 rounded-full bg-gradient-to-r from-emerald-200/40 to-teal-200/30 blur-3xl"
+            animate={{ y: [0, -30, 0], scale: [1, 1.05, 1] }}
+            transition={{ duration: 6, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute -right-32 bottom-1/4 h-72 w-72 rounded-full bg-gradient-to-r from-orange-200/40 to-amber-200/30 blur-3xl"
+            animate={{ y: [0, 30, 0], scale: [1, 1.03, 1] }}
+            transition={{ duration: 7, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: 1 }}
+          />
+        </div>
 
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-medium"
-        >
-          At <span className="font-black bg-gradient-to-r from-cyan-400 to-indigo-500 text-transparent bg-clip-text">Vmerg</span>, we help brands launch, scale and{" "}
-          <span className="text-white font-black">dominate</span> with creator-first strategies backed by real data & execution.
-        </motion.p>
-
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.8, type: "spring" }}
-          className="mt-12"
-        >
-          <Link
-            href="#lead-form"
-            className="group relative inline-flex items-center px-10 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 text-white font-semibold text-lg shadow-2xl hover:shadow-cyan-500/25 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-cyan-500/30 transition-all duration-300 overflow-hidden"
+        <section className="relative z-10 mx-auto max-w-7xl px-4 pb-24 pt-28 md:pb-32 md:pt-36 lg:pb-40">
+          <motion.div
+            variants={heroWrap}
+            initial="hidden"
+            animate="show"
+            className="grid items-start gap-16 lg:grid-cols-[1.2fr_1fr] lg:gap-20"
           >
-            <span className="relative z-10">Start Your Campaign 🚀</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent -skew-x-12 transform -translate-x-4 group-hover:translate-x-4 transition-transform duration-500" />
-          </Link>
-        </motion.div>
-      </motion.section>
-
-      {/* 💡 WHY VMERG - Staggered grid animation */}
-      <section className="relative z-10">
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="text-4xl md:text-5xl font-black text-center bg-gradient-to-r from-slate-100 to-slate-200 bg-clip-text text-transparent mb-4 tracking-tight"
-        >
-          Why Brands Choose Vmerg
-        </motion.h2>
-        
-        <motion.p 
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="text-lg text-slate-400 max-w-2xl mx-auto text-center mb-20 leading-relaxed"
-        >
-          Precision. Performance. Results.
-        </motion.p>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          {[
-            {
-              title: "Smart Creator Match",
-              desc: "AI-powered influencer discovery matching audience, niche & engagement metrics with surgical precision.",
-              icon: "🎯"
-            },
-            {
-              title: "End-to-End Execution", 
-              desc: "From strategy to final delivery — we handle outreach, contracts, content and performance.",
-              icon: "⚡"
-            },
-            {
-              title: "Performance Tracking",
-              desc: "Real-time dashboards with ROI metrics, attribution tracking and predictive analytics.",
-              icon: "📈"
-            }
-          ].map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.2, duration: 0.6 }}
-              whileHover={{ 
-                y: -10, 
-                scale: 1.02,
-                transition: { duration: 0.3 }
-              }}
-              className="group relative p-8 md:p-10 border border-white/10 bg-white/5 backdrop-blur-xl rounded-3xl hover:border-white/20 hover:bg-white/10 transition-all duration-500 overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-indigo-500/5 scale-0 group-hover:scale-100 transition-transform duration-500 rounded-3xl" />
-              <div className="relative z-10">
-                <motion.div 
-                  initial={{ scale: 0, rotate: 180 }}
-                  whileInView={{ scale: 1, rotate: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-indigo-500 rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-2xl"
-                >
-                  {item.icon}
-                </motion.div>
-                <h3 className="text-2xl font-black text-white mb-4 group-hover:text-cyan-400 transition-colors duration-300 tracking-tight">
-                  {item.title}
-                </h3>
-                <p className="text-slate-300 leading-relaxed text-lg">{item.desc}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* ⚙️ PROCESS - Timeline style */}
-      <section className="mt-32 relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="text-center mb-20"
-        >
-          <h2 className="text-4xl md:text-5xl font-black bg-gradient-to-r from-slate-100 to-slate-200 bg-clip-text text-transparent mb-4 tracking-tight">
-            How We Make It Happen
-          </h2>
-          <div className="h-1 w-24 bg-gradient-to-r from-cyan-500 to-indigo-500 mx-auto rounded-full" />
-        </motion.div>
-
-        <div className="grid md:grid-cols-4 gap-6 relative">
-          {/* Vertical line connector */}
-          <div className="absolute left-1/2 md:left-12 top-0 bottom-0 w-px bg-gradient-to-b from-cyan-500/30 to-indigo-500/30 hidden md:block" />
-          
-          {["Strategy", "Creator Match", "Execution", "Growth"].map((step, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.1 }}
-              whileHover={{ scale: 1.05 }}
-              className="relative group p-8 border border-white/10 bg-white/5 backdrop-blur-xl rounded-3xl hover:border-cyan-500/30 hover:bg-cyan-500/5 transition-all duration-500"
-            >
-              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 rounded-2xl -z-10 group-hover:opacity-100 opacity-0 transition-all duration-500 group-hover:opacity-100" />
-              <div className="relative">
-                <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-indigo-500 rounded-2xl flex items-center justify-center font-bold text-white text-lg mb-4 shadow-xl group-hover:scale-110 transition-transform duration-300">
-                  {i + 1}
-                </div>
-                <h3 className="font-black text-xl text-white mb-2 tracking-tight">{step}</h3>
-                <p className="text-sm text-slate-400">Perfect execution at every step</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* 📊 CASE STUDY - Glassmorphism card */}
-      <motion.section 
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        className="mt-32 relative z-10 text-center"
-      >
-        <h2 className="text-4xl md:text-5xl font-black bg-gradient-to-r from-slate-100 to-slate-200 bg-clip-text text-transparent mb-12 tracking-tight">
-          Proven Results
-        </h2>
-
-        <motion.div 
-          whileHover={{ scale: 1.02, y: -10 }}
-          className="p-12 md:p-20 border border-white/15 bg-white/10 backdrop-blur-3xl rounded-4xl shadow-2xl max-w-4xl mx-auto relative overflow-hidden"
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-indigo-500/5" />
-          <div className="relative z-10">
-            <motion.p 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              className="text-sm uppercase tracking-[0.25em] text-cyan-400 font-semibold mb-4"
-            >
-              Health & Wellness D2C
-            </motion.p>
-            <motion.h3 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
-              className="text-3xl md:text-4xl font-black text-white mb-8"
-            >
-              3M+ Reach • 120K+ Engagement
-            </motion.h3>
-            <motion.p 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="text-6xl md:text-7xl font-black bg-gradient-to-r from-cyan-400 to-indigo-500 text-transparent bg-clip-text mb-8"
-            >
-              10 Days 🚀
-            </motion.p>
-            <motion.p 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              className="text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed"
-            >
-              From zero to viral. Complete campaign strategy, execution and scaling.
-            </motion.p>
-          </div>
-        </motion.div>
-      </motion.section>
-
-      {/* 🔥 LEAD FORM - Enhanced glassmorphism */}
-      <section id="lead-form" className="mt-32 relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="bg-white/10 backdrop-blur-3xl border border-white/15 rounded-4xl shadow-2xl p-10 md:p-16 max-w-2xl mx-auto"
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/3 to-indigo-500/3 rounded-4xl" />
-          <div className="relative z-10 text-center">
-            <motion.h2 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              className="text-3xl md:text-5xl font-black bg-gradient-to-r from-slate-100 via-white to-slate-200 text-transparent bg-clip-text mb-6 tracking-tight"
-            >
-              Ready to Scale? 🚀
-            </motion.h2>
-
-            <motion.p 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="text-xl text-slate-300 mb-12 leading-relaxed font-medium"
-            >
-              Tell us about your brand. Get your custom strategy in 24 hours.
-            </motion.p>
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} className="space-y-4">
-                <input
-                  name="name"
-                  placeholder="Your Name *"
-                  value={form.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-5 rounded-3xl border border-white/20 bg-white/5 backdrop-blur-xl text-white placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-cyan-500/30 focus:border-transparent transition-all duration-300 text-lg font-medium"
-                />
-                <input
-                  name="email"
-                  type="email"
-                  placeholder="Your Email *"
-                  value={form.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-5 rounded-3xl border border-white/20 bg-white/5 backdrop-blur-xl text-white placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-cyan-500/30 focus:border-transparent transition-all duration-300 text-lg font-medium"
-                />
-              </motion.div>
-
-              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="space-y-4">
-                <input
-                  name="brand"
-                  placeholder="Brand Name *"
-                  value={form.brand}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-5 rounded-3xl border border-white/20 bg-white/5 backdrop-blur-xl text-white placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-cyan-500/30 focus:border-transparent transition-all duration-300 text-lg font-medium"
-                />
-                <select
-                  name="budget"
-                  value={form.budget}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-5 rounded-3xl border border-white/20 bg-white/5 backdrop-blur-xl text-white text-lg font-medium focus:outline-none focus:ring-4 focus:ring-cyan-500/30 focus:border-transparent appearance-none bg-no-repeat bg-right pr-12"
-                >
-                  <option value="">Select Budget Range</option>
-                  <option value="50k-1L">₹50K - ₹1L</option>
-                  <option value="1L-5L">₹1L - ₹5L</option>
-                  <option value="5L+">₹5L+</option>
-                </select>
-              </motion.div>
-
-              <motion.button
-                id="submit-btn"
-                type="submit"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 text-white py-6 rounded-3xl font-black text-xl shadow-2xl hover:shadow-cyan-500/50 hover:from-cyan-600 hover:to-indigo-700 focus:outline-none focus:ring-4 focus:ring-cyan-500/50 transition-all duration-300"
+            <motion.div className="space-y-10 lg:max-w-2xl">
+              <motion.span
+                variants={fadeUp}
+                className="inline-flex items-center gap-3 rounded-3xl border-2 border-emerald-200/70 bg-gradient-to-r from-emerald-50/90 to-white/95 px-8 py-4 text-sm font-black uppercase tracking-[0.3em] text-slate-800 shadow-2xl backdrop-blur-xl transition-all duration-500 hover:scale-105 hover:bg-emerald-50/80"
               >
-                Get Your Free Strategy Now 🚀
-              </motion.button>
-            </form>
-          </div>
-        </motion.div>
-      </section>
-    </div>
+                <div className="h-3 w-3 rounded-full bg-gradient-to-r from-emerald-400 to-teal-400 shadow-lg" />
+                Brands Only
+              </motion.span>
+
+              <motion.h1
+                variants={fadeUp}
+                className="text-5xl font-black leading-[0.92] tracking-[-0.05em] md:text-7xl lg:text-[8rem]"
+              >
+                <motion.span
+                  className="block bg-gradient-to-r from-slate-950 via-slate-900 to-slate-800 bg-clip-text text-transparent"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  Scale Your
+                </motion.span>
+                <motion.span
+                  className="block bg-gradient-to-r from-emerald-800 via-emerald-900 to-slate-900 bg-clip-text text-transparent"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  Brand 3.8X
+                </motion.span>
+                <motion.span className="inline-block bg-gradient-to-r from-orange-700 via-amber-800 to-emerald-900 bg-clip-text text-transparent">
+                  Faster
+                </motion.span>
+              </motion.h1>
+
+              <motion.p
+                variants={fadeUp}
+                className="max-w-xl text-xl leading-8 text-slate-700"
+              >
+                10,000+ vetted influencers across beauty, finance, crypto and lifestyle.
+                <strong className="font-semibold text-slate-900"> Trusted by 500+ brands</strong> with 3.8x average ROI.
+              </motion.p>
+
+              <motion.div variants={fadeUp} className="grid grid-cols-1 gap-8 sm:grid-cols-3">
+                {stats.map((stat) => (
+                  <motion.div
+                    key={stat.title}
+                    variants={floatCard}
+                    className="group relative rounded-3xl border border-slate-200/50 bg-white/90 p-8 shadow-xl backdrop-blur-2xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl"
+                    whileHover={{ scale: 1.03 }}
+                  >
+                    <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-r from-emerald-50/80 to-teal-50/80 shadow-xl transition-all duration-500 group-hover:scale-110">
+                      <span className="text-3xl transition-transform duration-500 group-hover:scale-125">
+                        {stat.icon}
+                      </span>
+                    </div>
+                    <p className="mb-3 text-xs font-bold uppercase tracking-[0.25em] text-slate-600 transition-colors group-hover:text-emerald-600">
+                      {stat.title}
+                    </p>
+                    <p className="bg-gradient-to-r from-slate-950 via-slate-900 to-emerald-800 bg-clip-text text-4xl font-black text-transparent md:text-5xl">
+                      {stat.value}
+                    </p>
+                    <p className="mt-2 text-sm font-medium text-slate-600">
+                      {stat.subtitle}
+                    </p>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
+
+            <motion.div variants={floatCard}>
+              <div className="relative">
+                <motion.div
+                  className="absolute inset-0 -z-10 rounded-[2rem] bg-gradient-to-br from-emerald-50/95 via-white/90 to-slate-50/80 shadow-2xl backdrop-blur-3xl"
+                  animate={{ scale: [1, 1.02, 1], rotate: [-0.5, 0.5, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+                />
+                <motion.form
+                  onSubmit={handleSubmit}
+                  className="relative rounded-[2rem] border-2 border-white/60 bg-gradient-to-br from-white/95 to-slate-50/95 p-8 shadow-2xl backdrop-blur-3xl transition-all duration-700 hover:-translate-y-2 md:p-12"
+                  initial={{ y: 50, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                >
+                  <div className="mb-10 text-center">
+                    <motion.p
+                      className="mb-4 inline-flex items-center gap-2 rounded-full bg-emerald-100/80 px-6 py-2 text-sm font-black uppercase tracking-widest text-emerald-700"
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      <div className="h-2 w-2 rounded-full bg-emerald-500" />
+                      Launch Campaign
+                    </motion.p>
+                    <motion.h3
+                      className="mb-4 bg-gradient-to-r from-slate-950 via-slate-900 to-emerald-800 bg-clip-text text-4xl font-black text-transparent md:text-5xl"
+                      whileHover={{ scale: 1.02 }}
+                    >
+                      Your Brand Details
+                    </motion.h3>
+                    <motion.p
+                      className="mx-auto max-w-md text-lg leading-relaxed text-slate-700"
+                      whileHover={{ scale: 1.01 }}
+                    >
+                      Get matched with perfect creators in 24hrs
+                    </motion.p>
+                  </div>
+
+                  <div className="space-y-6">
+                    <motion.input
+                      name="name"
+                      placeholder="Full Name *"
+                      value={form.name}
+                      onChange={handleChange}
+                      className="w-full rounded-3xl border-2 border-slate-200/70 bg-white/95 px-6 py-5 text-lg font-semibold text-slate-900 shadow-lg backdrop-blur-xl transition-all duration-300 placeholder:text-slate-500 hover:border-emerald-300/80 focus:border-emerald-400 focus:outline-none focus:ring-4 focus:ring-emerald-200/60"
+                      whileFocus={{ scale: 1.02, y: -2 }}
+                      required
+                    />
+                    <motion.input
+                      name="email"
+                      type="email"
+                      placeholder="Work Email *"
+                      value={form.email}
+                      onChange={handleChange}
+                      className="w-full rounded-3xl border-2 border-slate-200/70 bg-white/95 px-6 py-5 text-lg font-semibold text-slate-900 shadow-lg backdrop-blur-xl transition-all duration-300 placeholder:text-slate-500 hover:border-emerald-300/80 focus:border-emerald-400 focus:outline-none focus:ring-4 focus:ring-emerald-200/60"
+                      whileFocus={{ scale: 1.02, y: -2 }}
+                      required
+                    />
+                    <motion.input
+                      name="brand"
+                      placeholder="Brand Name *"
+                      value={form.brand}
+                      onChange={handleChange}
+                      className="w-full rounded-3xl border-2 border-slate-200/70 bg-white/95 px-6 py-5 text-lg font-semibold text-slate-900 shadow-lg backdrop-blur-xl transition-all duration-300 placeholder:text-slate-500 hover:border-emerald-300/80 focus:border-emerald-400 focus:outline-none focus:ring-4 focus:ring-emerald-200/60"
+                      whileFocus={{ scale: 1.02, y: -2 }}
+                      required
+                    />
+                    <motion.select
+                      name="budget"
+                      value={form.budget}
+                      onChange={handleChange}
+                      className="w-full appearance-none rounded-3xl border-2 border-slate-200/70 bg-white/95 px-6 py-5 text-lg font-semibold text-slate-900 shadow-lg backdrop-blur-xl transition-all duration-300 hover:border-emerald-300/80 focus:border-emerald-400 focus:outline-none focus:ring-4 focus:ring-emerald-200/60"
+                      whileFocus={{ scale: 1.02, y: -2 }}
+                      required
+                    >
+                      <option value="" disabled>
+                        Select Budget Range
+                      </option>
+                      <option value="₹50K – ₹1L">₹50K – ₹1L</option>
+                      <option value="₹1L – ₹5L">₹1L – ₹5L</option>
+                      <option value="₹5L – ₹10L">₹5L – ₹10L</option>
+                      <option value="₹10L+">₹10L+</option>
+                    </motion.select>
+
+                    <motion.button
+                      type="submit"
+                      className="group relative w-full overflow-hidden rounded-[2rem] bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-700 px-8 py-7 text-xl font-black text-white shadow-2xl transition-all duration-500 hover:shadow-2xl"
+                      whileHover={{
+                        scale: 1.03,
+                        boxShadow: "0 25px 50px -12px rgba(16, 185, 129, 0.4)",
+                      }}
+                      whileTap={{ scale: 0.97 }}
+                    >
+                      <span className="relative z-10 flex items-center justify-center gap-3 font-black tracking-wide">
+                        Continue on WhatsApp
+                      </span>
+                    </motion.button>
+                  </div>
+                </motion.form>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          <motion.section
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-100px" }}
+            className="mx-auto max-w-7xl px-4 py-24"
+          >
+            <h2 className="mb-16 bg-gradient-to-r from-slate-900 to-emerald-800 bg-clip-text text-center text-4xl font-black text-transparent md:text-5xl">
+              Top Influencers VMerg
+            </h2>
+
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+              {topInfluencers.map((influencer) => (
+                <motion.div
+                  key={influencer}
+                  className="group relative overflow-hidden rounded-3xl border border-slate-200/50 bg-white/80 p-6 shadow-xl backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+                  whileHover={{ scale: 1.03 }}
+                >
+                  <img
+                    src={`/images/brands/${influencer.toLowerCase().replace(/ /g, "-")}.jpg`}
+                    alt={influencer}
+                    className="mb-4 h-32 w-full rounded-2xl object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <h4 className="text-lg font-bold text-slate-900 transition-colors group-hover:text-emerald-700">
+                    {influencer}
+                  </h4>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+
+          <motion.section
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-100px" }}
+            className="mx-auto max-w-7xl px-4 py-24"
+          >
+            <div className="mb-20 text-center">
+              <h2 className="mb-4 bg-gradient-to-r from-emerald-800 via-slate-900 to-orange-700 bg-clip-text text-4xl font-black text-transparent md:text-5xl">
+                500+ Trusted Brands
+              </h2>
+              <p className="mx-auto max-w-2xl text-xl text-slate-600">
+                VMerg Media has powered campaigns for leading brands.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4">
+              {trustedBrands.map((brand) => (
+                <motion.div
+                  key={brand}
+                  className="group rounded-3xl border border-slate-200/50 bg-white/70 p-8 shadow-xl backdrop-blur-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl"
+                  whileHover={{ scale: 1.03 }}
+                >
+                  <img
+                    src={`/images/brands/${brand.toLowerCase().replace(/ /g, "-")}.jpg`}
+                    alt={brand}
+                    className="mx-auto mb-6 h-32 w-32 rounded-2xl object-contain transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <h4 className="text-center text-xl font-bold text-slate-900 transition-colors group-hover:text-emerald-700">
+                    {brand}
+                  </h4>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+        </section>
+      </main>
+    </>
   );
 }
