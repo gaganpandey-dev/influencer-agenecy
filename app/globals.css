@@ -273,4 +273,18 @@
   --color-primary-hover: #7e9f91;
   --color-accent: #d8c2a8;
   --color-accent-hover: #c1a78f;
+}@keyframes bgMove {
+  0% {
+    transform: scale(1) translateY(0px);
+  }
+  50% {
+    transform: scale(1.05) translateY(-10px);
+  }
+  100% {
+    transform: scale(1) translateY(0px);
+  }
+}
+
+.animate-bgMove {
+  animation: bgMove 20s ease-in-out infinite;
 }

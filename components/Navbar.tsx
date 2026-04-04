@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -51,18 +52,26 @@ export default function Navbar({ activeSection }: NavbarProps) {
             : "border-transparent bg-white/80"
         }`}
       >
-        <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
+
+            {/* 🔥 LOGO */}
             <Link
               href="/"
-              className="text-2xl font-black tracking-tight transition-all hover:scale-105"
+              className="flex items-center gap-2"
               onClick={() => setMobileMenu(false)}
             >
-              <span className="bg-gradient-to-r from-cyan-600 to-teal-700 bg-clip-text text-transparent">
-                Vmerg
-              </span>
+              <Image
+                src="/vmerge.jpeg"   // 👈 ensure this file exists in /public
+                alt="Vmerg"
+                width={110}
+                height={40}
+                className="object-contain"
+                priority
+              />
             </Link>
 
+            {/* DESKTOP MENU */}
             <div className="hidden items-center gap-8 md:flex">
               {navItems.map((item) => (
                 <Link
@@ -71,14 +80,16 @@ export default function Navbar({ activeSection }: NavbarProps) {
                   onClick={() => setMobileMenu(false)}
                   className={`group relative py-2 text-sm font-semibold transition-all ${
                     isActive(item.href)
-                      ? "text-cyan-700"
-                      : "text-slate-900 hover:text-cyan-600"
+                      ? "text-indigo-600"
+                      : "text-slate-900 hover:text-indigo-500"
                   }`}
                 >
                   {item.name}
                   <span
-                    className={`absolute -bottom-1 left-0 h-0.5 rounded-full bg-cyan-600 transition-all duration-300 ${
-                      isActive(item.href) ? "w-full" : "w-0 group-hover:w-full"
+                    className={`absolute -bottom-1 left-0 h-0.5 rounded-full bg-indigo-500 transition-all duration-300 ${
+                      isActive(item.href)
+                        ? "w-full"
+                        : "w-0 group-hover:w-full"
                     }`}
                   />
                 </Link>
@@ -86,17 +97,17 @@ export default function Navbar({ activeSection }: NavbarProps) {
 
               <Link
                 href="/contact"
-                className="ml-4 rounded-2xl border border-slate-900/20 bg-slate-950 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:scale-[1.02] hover:bg-black hover:shadow-lg"
+                className="ml-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:scale-[1.05] hover:shadow-lg"
               >
                 Get Strategy
               </Link>
             </div>
 
+            {/* MOBILE BUTTON */}
             <button
               type="button"
               className="rounded-lg p-2 transition-colors hover:bg-slate-100 md:hidden"
               onClick={() => setMobileMenu((prev) => !prev)}
-              aria-label="Toggle menu"
             >
               {mobileMenu ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -104,35 +115,28 @@ export default function Navbar({ activeSection }: NavbarProps) {
         </div>
       </nav>
 
+      {/* MOBILE MENU */}
       {mobileMenu && (
-        <div className="fixed inset-0 top-[88px] z-40 border-t border-slate-200 bg-white md:hidden">
-          <div className="mx-auto max-w-7xl px-4 pb-20 pt-8">
-            <div className="space-y-2">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setMobileMenu(false)}
-                  className={`block w-full rounded-xl px-6 py-4 text-left font-semibold transition-all ${
-                    isActive(item.href)
-                      ? "border border-cyan-200 bg-gradient-to-r from-cyan-50 to-teal-50 text-cyan-700 shadow-lg"
-                      : "text-slate-900 hover:bg-slate-100"
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-
-            <div className="mt-8 border-t border-slate-200 pt-6">
+        <div className="fixed inset-0 top-[70px] z-40 bg-white md:hidden">
+          <div className="px-6 pt-6 space-y-4">
+            {navItems.map((item) => (
               <Link
-                href="/contact"
+                key={item.name}
+                href={item.href}
                 onClick={() => setMobileMenu(false)}
-                className="block w-full rounded-2xl bg-slate-950 px-8 py-5 text-center text-lg font-semibold text-white shadow-lg transition-all hover:scale-[1.02] hover:bg-black hover:shadow-xl"
+                className="block text-lg font-semibold text-slate-900 hover:text-indigo-600"
               >
-                Get Strategy →
+                {item.name}
               </Link>
-            </div>
+            ))}
+
+            <Link
+              href="/contact"
+              onClick={() => setMobileMenu(false)}
+              className="block mt-6 text-center bg-indigo-600 text-white py-3 rounded-xl font-semibold"
+            >
+              Get Strategy →
+            </Link>
           </div>
         </div>
       )}
